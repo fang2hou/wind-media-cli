@@ -39,12 +39,30 @@ fn default_addon_name() -> String {
 	"!!!WindMedia".to_string()
 }
 
-fn project_dirs() -> Option<directories::ProjectDirs> {
-	directories::ProjectDirs::from("", "", "wind-media")
-}
-
+/// Resolve the XDG-style config directory across all platforms.
+///
+/// - Unix (macOS, Linux): `$XDG_CONFIG_HOME/wind-media` (defaults to `~/.config/wind-media`)
+/// - Windows: `{APPDATA}\wind-media\config`
 pub fn config_dir() -> Option<PathBuf> {
-	project_dirs().map(|d| d.config_dir().to_path_buf())
+	#[cfg(unix)]
+	{
+		if let Ok(xdg) = std::env::var("XDG_CONFIG_HOME") {
+			let p = PathBuf::from(xdg);
+			if p.is_absolute() {
+				return Some(p.join("wind-media"));
+			}
+		}
+		std::env::var("HOME")
+			.ok()
+			.map(|h| PathBuf::from(h).join(".config").join("wind-media"))
+	}
+
+	#[cfg(windows)]
+	{
+		std::env::var("APPDATA")
+			.ok()
+			.map(|a| PathBuf::from(a).join("wind-media").join("config"))
+	}
 }
 
 pub fn config_path() -> Option<PathBuf> {
