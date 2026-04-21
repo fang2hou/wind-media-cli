@@ -54,7 +54,9 @@ wind-media completion fish > ~/.config/fish/completions/wind-media.fish
 | -------- | -------------------------------------------------- |
 | Linux    | `~/.config/wind-media/config.toml`                |
 | macOS    | `~/.config/wind-media/config.toml`                |
-| Windows  | `C:\Users\<Username>\.config\wind-media\config.toml` |
+| Windows  | `%XDG_CONFIG_HOME%\wind-media\config.toml` (defaults to `%USERPROFILE%\.config\wind-media\config.toml`) |
+
+> **Note:** `XDG_CONFIG_HOME` is checked first on all platforms. If unset, the default varies by OS.
 
 Create a default config:
 

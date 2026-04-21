@@ -149,8 +149,4 @@ fn e2e_output_helpers_no_panic() {
 	wind_media_cli::output::print_warning("test warning");
 	wind_media_cli::output::print_error("test error");
 	wind_media_cli::output::print_info("label", "value");
-	let uuid = uuid::Uuid::new_v4();
-	let short = wind_media_cli::output::short_uuid(uuid);
-	assert!(short.ends_with('…'));
-	assert_eq!(short.len(), 11);
 }

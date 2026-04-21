@@ -99,7 +99,7 @@ Be conservative with command-line interface changes:
 
 Include when possible:
 
-- CLI version (`wind-media --version`)
+- CLI version (`wind-media-cli --version`)
 - Rust version
 - operating system
 - config file contents (redact paths if needed)
