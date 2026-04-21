@@ -4,6 +4,9 @@ use serde::{Deserialize, Serialize};
 
 use crate::error::WindMediaError;
 
+/// CLI default for the maximum number of data.lua backups retained per write.
+pub const DEFAULT_MAX_BACKUPS: u32 = 5;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
 	#[serde(default)]
@@ -28,6 +31,8 @@ pub struct DefaultsConfig {
 	pub locales: Option<Vec<String>>,
 	#[serde(default, skip_serializing_if = "Option::is_none")]
 	pub reject_duplicates: Option<bool>,
+	#[serde(default, skip_serializing_if = "Option::is_none")]
+	pub max_backups: Option<u32>,
 }
 
 fn default_addon_name() -> String {
@@ -54,7 +59,11 @@ impl Config {
 				wow_path: None,
 				dir: None,
 			},
-			defaults: None,
+			defaults: Some(DefaultsConfig {
+				locales: None,
+				reject_duplicates: None,
+				max_backups: Some(DEFAULT_MAX_BACKUPS),
+			}),
 		}
 	}
 
@@ -121,4 +130,11 @@ impl Config {
 
 		None
 	}
+}
+
+pub fn resolve_max_backups(config: Option<&Config>) -> u32 {
+	config
+		.and_then(|c| c.defaults.as_ref())
+		.and_then(|d| d.max_backups)
+		.unwrap_or(DEFAULT_MAX_BACKUPS)
 }

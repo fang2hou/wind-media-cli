@@ -41,7 +41,9 @@ pub fn run(
 		opts.reject_duplicates = reject;
 	}
 
-	let result = wow_sharedmedia::import_media(addon_dir, opts).map_err(WindMediaError::library)?;
+	let result =
+		wow_sharedmedia::import_media(addon_dir, opts, crate::config::resolve_max_backups(config))
+			.map_err(WindMediaError::library)?;
 
 	output::print_success(&format!(
 		"Imported \"{}\" ({})",
