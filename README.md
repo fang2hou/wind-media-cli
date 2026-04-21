@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Rust 1.95+](https://img.shields.io/badge/rust-1.95.0+-blue.svg)](https://doc.rust-lang.org/edition-guide/rust-2024/)
 
-A CLI tool for managing the Wind Media WoW SharedMedia addon. Built on the [`wow-sharedmedia`](https://github.com/fang2hou/wow-sharedmedia) library.
+A CLI tool for managing the Wind Media WoW [SharedMedia](https://www.wowace.com/projects/libsharedmedia-3-0) addon. Built on the [`wow-sharedmedia`](https://github.com/fang2hou/wow-sharedmedia) library.
 
 It initializes addon directories, imports media files, manages registry entries, and keeps everything in a consistent state through a simple command-line interface.
 
@@ -98,4 +98,4 @@ You can also pass `--addon-dir <PATH>` to any command to override the config.
 
 ## 📄 License
 
-[MIT](./LICENSE).
+[MIT](./LICENSE)
