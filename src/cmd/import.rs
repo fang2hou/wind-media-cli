@@ -16,6 +16,10 @@ pub fn run(
 	tags: Option<&str>,
 	no_reject_duplicates: bool,
 ) -> Result<(), WindMediaError> {
+	if key.trim().is_empty() {
+		return Err(WindMediaError::InvalidInput("key cannot be empty".into()));
+	}
+
 	let mt: wow_sharedmedia::MediaType = media_type.into();
 	let mut opts = wow_sharedmedia::ImportOptions::new(mt, key, source);
 

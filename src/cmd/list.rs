@@ -29,7 +29,7 @@ pub fn run(addon_dir: &Path) -> Result<(), WindMediaError> {
 		]);
 	}
 
-	eprintln!("{table}");
+	println!("{table}");
 	eprintln!("{} entries", data.entries.len());
 
 	Ok(())

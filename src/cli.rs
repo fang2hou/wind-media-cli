@@ -117,3 +117,23 @@ pub fn parse_csv(s: &str) -> Vec<String> {
 		.filter(|v| !v.is_empty())
 		.collect()
 }
+
+#[cfg(test)]
+mod tests {
+	use super::parse_csv;
+
+	#[test]
+	fn parse_csv_trims_and_filters() {
+		assert_eq!(parse_csv("a, b , ,c"), vec!["a", "b", "c"]);
+	}
+
+	#[test]
+	fn parse_csv_empty() {
+		assert!(parse_csv("").is_empty());
+	}
+
+	#[test]
+	fn parse_csv_only_commas() {
+		assert!(parse_csv(",,,,").is_empty());
+	}
+}

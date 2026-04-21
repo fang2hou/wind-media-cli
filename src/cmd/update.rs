@@ -11,8 +11,7 @@ pub fn run(
 	locales: Option<&str>,
 ) -> Result<(), WindMediaError> {
 	if key.is_none() && tags.is_none() && locales.is_none() {
-		eprintln!("Nothing to update; provide at least one of --key, --tags, or --locales.");
-		std::process::exit(1);
+		return Err(WindMediaError::NoUpdateFields);
 	}
 
 	let opts = wow_sharedmedia::UpdateOptions {

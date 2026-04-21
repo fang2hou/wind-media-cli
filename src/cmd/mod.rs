@@ -6,24 +6,32 @@ pub mod list;
 pub mod remove;
 pub mod update;
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use crate::cli::{Cli, Command};
 use crate::config::Config;
 use crate::error::WindMediaError;
 
 fn resolve_addon_dir(cli: &Cli, config: Option<&Config>) -> Result<PathBuf, WindMediaError> {
-	if let Some(ref dir) = cli.addon_dir {
-		return Ok(dir.clone());
-	}
-
-	if let Some(config) = config
+	let dir = if let Some(ref dir) = cli.addon_dir {
+		dir.clone()
+	} else if let Some(config) = config
 		&& let Some(dir) = config.resolve_addon_dir()
 	{
-		return Ok(dir);
-	}
+		dir
+	} else {
+		return Err(WindMediaError::AddonDirNotConfigured);
+	};
 
-	Err(WindMediaError::AddonDirNotConfigured)
+	validate_addon_dir(&dir)?;
+	Ok(dir)
+}
+
+fn validate_addon_dir(dir: &Path) -> Result<(), WindMediaError> {
+	if dir.file_name().is_none() {
+		return Err(WindMediaError::AddonDirNotConfigured);
+	}
+	Ok(())
 }
 
 pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
@@ -88,7 +96,7 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 		Command::ConfigInit => config_cmd::run_init(config)?,
 		Command::ConfigShow => config_cmd::run_show(config)?,
 		Command::ConfigPath => config_cmd::run_path()?,
-		Command::Completion { .. } => unreachable!("handled in main"),
+		Command::Completion { .. } => {}
 	}
 
 	Ok(())

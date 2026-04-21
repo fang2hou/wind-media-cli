@@ -60,7 +60,9 @@ impl Config {
 
 	pub fn load() -> Result<Self, WindMediaError> {
 		let path = config_path().ok_or_else(|| {
-			WindMediaError::ConfigNotFound(PathBuf::from("$XDG_CONFIG_HOME/wind-media/config.toml"))
+			WindMediaError::ConfigNotFound(PathBuf::from(
+				"<platform config dir>/wind-media/config.toml",
+			))
 		})?;
 
 		if !path.exists() {
@@ -82,7 +84,9 @@ impl Config {
 
 	pub fn save(&self) -> Result<(), WindMediaError> {
 		let dir = config_dir().ok_or_else(|| {
-			WindMediaError::ConfigNotFound(PathBuf::from("$XDG_CONFIG_HOME/wind-media/config.toml"))
+			WindMediaError::ConfigNotFound(PathBuf::from(
+				"<platform config dir>/wind-media/config.toml",
+			))
 		})?;
 
 		std::fs::create_dir_all(&dir).map_err(|e| WindMediaError::Io {
@@ -96,7 +100,12 @@ impl Config {
 			detail: e.to_string(),
 		})?;
 
-		std::fs::write(&path, content).map_err(|e| WindMediaError::Io { source: e, path })?;
+		let tmp_path = dir.join("config.toml.tmp");
+		std::fs::write(&tmp_path, &content).map_err(|e| WindMediaError::Io {
+			source: e,
+			path: tmp_path.clone(),
+		})?;
+		std::fs::rename(&tmp_path, &path).map_err(|e| WindMediaError::Io { source: e, path })?;
 
 		Ok(())
 	}

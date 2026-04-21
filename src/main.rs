@@ -15,7 +15,7 @@ fn main() {
 	if let Command::Completion { shell } = cli.command {
 		let mut app = cli::Cli::command();
 		let name = app.get_name().to_string();
-		clap_complete::generate(shell, &mut app, &name, &mut std::io::stdout());
+		clap_complete::generate(shell, &mut app, name, &mut std::io::stdout());
 		return;
 	}
 

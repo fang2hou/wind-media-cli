@@ -2,20 +2,19 @@ use std::path::PathBuf;
 
 #[derive(Debug, thiserror::Error)]
 pub enum WindMediaError {
-	#[error("Config file not found: {0}\n\n  Run `wind-media config init` to create one.")]
+	#[error("Config file not found: {0}\n\n  Run `wind-media config-init` to create one.")]
 	ConfigNotFound(PathBuf),
 
 	#[error(
-		"No addon directory configured.\n\n  Either:\n    1. Set it in config:  wind-media config init\n    2. Pass it directly:  wind-media --addon-dir <PATH> <command>"
+		"No addon directory configured.\n\n  Either:\n    1. Set it in config:  wind-media config-init\n    2. Pass it directly:  wind-media --addon-dir <PATH> <command>"
 	)]
 	AddonDirNotConfigured,
 
 	#[error("Failed to parse config file at {path}:\n  {detail}")]
 	ConfigParse { path: PathBuf, detail: String },
 
-	#[error("{message}")]
+	#[error("{source}")]
 	Library {
-		message: String,
 		#[source]
 		source: wow_sharedmedia::Error,
 	},
@@ -26,23 +25,21 @@ pub enum WindMediaError {
 		source: std::io::Error,
 		path: PathBuf,
 	},
+
+	#[error("Nothing to update. Provide at least one of --key, --tags, or --locales.")]
+	NoUpdateFields,
+
+	#[error(
+		"Could not determine config directory.\n\n  Your system does not support standard config paths."
+	)]
+	ConfigDirUnavailable,
+
+	#[error("Invalid input: {0}")]
+	InvalidInput(String),
 }
 
 impl WindMediaError {
 	pub fn library(err: wow_sharedmedia::Error) -> Self {
-		let message = err.to_string();
-		Self::Library {
-			message,
-			source: err,
-		}
-	}
-}
-
-impl From<std::io::Error> for WindMediaError {
-	fn from(err: std::io::Error) -> Self {
-		Self::Io {
-			path: PathBuf::from("<unknown>"),
-			source: err,
-		}
+		Self::Library { source: err }
 	}
 }

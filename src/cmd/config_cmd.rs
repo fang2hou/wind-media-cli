@@ -1,7 +1,6 @@
 use crate::config::{self, Config};
 use crate::error::WindMediaError;
 use crate::output;
-
 pub fn run_init(existing: Option<Config>) -> Result<(), WindMediaError> {
 	let cfg = existing.unwrap_or_else(Config::default_config);
 	cfg.save()?;
@@ -59,10 +58,7 @@ pub fn run_show(existing: Option<Config>) -> Result<(), WindMediaError> {
 pub fn run_path() -> Result<(), WindMediaError> {
 	match config::config_path() {
 		Some(p) => println!("{}", p.display()),
-		None => {
-			output::print_error("Could not determine config directory.");
-			std::process::exit(1);
-		}
+		None => return Err(WindMediaError::ConfigDirUnavailable),
 	}
 	Ok(())
 }

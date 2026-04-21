@@ -22,11 +22,6 @@ pub fn print_info(label: &str, value: &str) {
 	eprintln!("  {}: {}", label.dimmed(), value);
 }
 
-#[allow(dead_code)]
-pub fn print_kv(label: &str, value: &str) {
-	eprintln!("  {label}: {value}");
-}
-
 pub fn short_uuid(id: uuid::Uuid) -> String {
 	let s = id.to_string();
 	format!("{}…", &s[..8])
