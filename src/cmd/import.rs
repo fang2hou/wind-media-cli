@@ -24,10 +24,12 @@ pub fn run(
 	let mut opts = wow_sharedmedia::ImportOptions::new(mt, key, source);
 
 	if let Some(tags_str) = tags {
-		opts.tags = crate::cli::parse_csv(tags_str);
+		opts.tags = crate::cli::split_comma_list(tags_str)
+			.map_err(|e| WindMediaError::InvalidInput(format!("invalid --tags: {e}")))?;
 	}
 	if let Some(locales_str) = locales {
-		opts.locales = crate::cli::parse_csv(locales_str);
+		opts.locales = crate::cli::split_comma_list(locales_str)
+			.map_err(|e| WindMediaError::InvalidInput(format!("invalid --locales: {e}")))?;
 	}
 
 	if no_reject_duplicates {

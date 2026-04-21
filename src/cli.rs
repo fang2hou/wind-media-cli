@@ -3,10 +3,7 @@ use std::path::PathBuf;
 use clap::{Parser, Subcommand, ValueEnum};
 
 #[derive(Parser)]
-#[command(
-	name = "wind-media",
-	about = "Manage the Wind Media WoW SharedMedia addon"
-)]
+#[command(name = "wind-media", about = "Wind Media addon CLI")]
 pub struct Cli {
 	/// Override addon directory path
 	#[arg(long, global = true)]
@@ -111,29 +108,45 @@ impl std::fmt::Display for CliMediaType {
 	}
 }
 
-pub fn parse_csv(s: &str) -> Vec<String> {
-	s.split(',')
-		.map(|v| v.trim().to_string())
-		.filter(|v| !v.is_empty())
-		.collect()
+pub fn split_comma_list(s: &str) -> Result<Vec<String>, &'static str> {
+	if s.is_empty() {
+		return Ok(vec![]);
+	}
+	let mut items = Vec::new();
+	for v in s.split(',') {
+		if v.is_empty() {
+			continue;
+		}
+		if v.chars().any(|c| c.is_whitespace()) {
+			return Err("items must not contain whitespace");
+		}
+		items.push(v.to_string());
+	}
+	Ok(items)
 }
 
 #[cfg(test)]
 mod tests {
-	use super::parse_csv;
+	use super::split_comma_list;
 
 	#[test]
-	fn parse_csv_trims_and_filters() {
-		assert_eq!(parse_csv("a, b , ,c"), vec!["a", "b", "c"]);
+	fn basic() {
+		assert_eq!(split_comma_list("a,b,c").unwrap(), vec!["a", "b", "c"]);
 	}
 
 	#[test]
-	fn parse_csv_empty() {
-		assert!(parse_csv("").is_empty());
+	fn empty() {
+		assert!(split_comma_list("").unwrap().is_empty());
 	}
 
 	#[test]
-	fn parse_csv_only_commas() {
-		assert!(parse_csv(",,,,").is_empty());
+	fn only_commas() {
+		assert!(split_comma_list(",,,,").unwrap().is_empty());
+	}
+
+	#[test]
+	fn rejects_whitespace() {
+		assert!(split_comma_list("a, b").is_err());
+		assert!(split_comma_list("a b").is_err());
 	}
 }
