@@ -13,7 +13,7 @@ pub enum WindMediaError {
 	#[error("Failed to parse config file at {path}:\n  {detail}")]
 	ConfigParse { path: PathBuf, detail: String },
 
-	#[error("{source}")]
+	#[error("{source:#}")]
 	Library {
 		#[source]
 		source: wow_sharedmedia::Error,

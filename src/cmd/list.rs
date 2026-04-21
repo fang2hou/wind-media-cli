@@ -22,7 +22,7 @@ pub fn run(addon_dir: &Path) -> Result<(), WindMediaError> {
 
 	for entry in &data.entries {
 		table.add_row(vec![
-			output::short_uuid(entry.id),
+			entry.id.to_string(),
 			entry.media_type.to_string(),
 			entry.key.clone(),
 			entry.file.clone(),

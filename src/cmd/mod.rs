@@ -6,7 +6,7 @@ pub mod list;
 pub mod remove;
 pub mod update;
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::cli::{Cli, Command};
 use crate::config::Config;
@@ -23,15 +23,21 @@ fn resolve_addon_dir(cli: &Cli, config: Option<&Config>) -> Result<PathBuf, Wind
 		return Err(WindMediaError::AddonDirNotConfigured);
 	};
 
-	validate_addon_dir(&dir)?;
-	Ok(dir)
-}
-
-fn validate_addon_dir(dir: &Path) -> Result<(), WindMediaError> {
 	if dir.file_name().is_none() {
 		return Err(WindMediaError::AddonDirNotConfigured);
 	}
-	Ok(())
+	Ok(dir)
+}
+
+fn resolve_existing_addon_dir(cli: &Cli, config: Option<&Config>) -> Result<PathBuf, WindMediaError> {
+	let dir = resolve_addon_dir(cli, config)?;
+	if !dir.join("data.lua").exists() {
+		return Err(WindMediaError::InvalidInput(format!(
+			"Not an addon directory (missing data.lua): {}\n\n  Run `wind-media init` first, or check the path.",
+			dir.display()
+		)));
+	}
+	Ok(dir)
 }
 
 pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
@@ -67,11 +73,11 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 			)?;
 		}
 		Command::List => {
-			let dir = resolve_addon_dir(&cli, config.as_ref())?;
+			let dir = resolve_existing_addon_dir(&cli, config.as_ref())?;
 			list::run(&dir)?;
 		}
 		Command::Remove { id } => {
-			let dir = resolve_addon_dir(&cli, config.as_ref())?;
+			let dir = resolve_existing_addon_dir(&cli, config.as_ref())?;
 			remove::run(&dir, &id, config.as_ref())?;
 		}
 		Command::Update {
@@ -80,7 +86,7 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 			ref tags,
 			ref locales,
 		} => {
-			let dir = resolve_addon_dir(&cli, config.as_ref())?;
+			let dir = resolve_existing_addon_dir(&cli, config.as_ref())?;
 			update::run(
 				&dir,
 				&id,
@@ -91,7 +97,7 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 			)?;
 		}
 		Command::Info => {
-			let dir = resolve_addon_dir(&cli, config.as_ref())?;
+			let dir = resolve_existing_addon_dir(&cli, config.as_ref())?;
 			info::run(&dir)?;
 		}
 		Command::ConfigInit => config_cmd::run_init(config)?,

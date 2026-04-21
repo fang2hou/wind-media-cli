@@ -21,8 +21,3 @@ pub fn print_error(msg: &str) {
 pub fn print_info(label: &str, value: &str) {
 	eprintln!("  {}: {}", label.dimmed(), value);
 }
-
-pub fn short_uuid(id: uuid::Uuid) -> String {
-	let s = id.to_string();
-	format!("{}…", &s[..8])
-}
