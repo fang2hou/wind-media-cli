@@ -46,6 +46,9 @@ pub fn run_show(existing: Option<Config>) -> Result<(), WindMediaError> {
 				if let Some(reject) = defaults.reject_duplicates {
 					output::print_info("defaults.reject_duplicates", &reject.to_string());
 				}
+				if let Some(max_backups) = defaults.max_backups {
+					output::print_info("defaults.max_backups", &max_backups.to_string());
+				}
 			}
 		}
 		None => {

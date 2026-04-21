@@ -10,12 +10,16 @@ fn create_test_png(path: &std::path::Path) {
 	std::fs::write(path, buf.into_inner()).unwrap();
 }
 
+fn max_backups() -> u32 {
+	wind_media_cli::config::DEFAULT_MAX_BACKUPS
+}
+
 #[test]
 fn e2e_full_lifecycle() {
 	let tmp = tempfile::TempDir::new().unwrap();
 	let addon_dir = tmp.path().join("TestAddon");
 
-	wow_sharedmedia::ensure_addon_dir(&addon_dir).unwrap();
+	wow_sharedmedia::ensure_addon_dir(&addon_dir, max_backups()).unwrap();
 	assert!(addon_dir.join("data.lua").exists());
 
 	let source = tmp.path().join("bar.png");
@@ -24,6 +28,7 @@ fn e2e_full_lifecycle() {
 	let result = wow_sharedmedia::import_media(
 		&addon_dir,
 		wow_sharedmedia::ImportOptions::new(wow_sharedmedia::MediaType::Statusbar, "Bar", &source),
+		max_backups(),
 	)
 	.unwrap();
 	assert_eq!(result.entry.key, "Bar");
@@ -41,6 +46,7 @@ fn e2e_full_lifecycle() {
 	let result2 = wow_sharedmedia::import_media(
 		&addon_dir,
 		wow_sharedmedia::ImportOptions::new(wow_sharedmedia::MediaType::Background, "BG", &source2),
+		max_backups(),
 	)
 	.unwrap();
 	assert_eq!(result2.entry.key, "BG");
@@ -60,12 +66,13 @@ fn e2e_full_lifecycle() {
 			locales: None,
 			tags: Some(vec!["renamed".to_string()]),
 		},
+		max_backups(),
 	)
 	.unwrap();
 	assert_eq!(updated.key, "Renamed Bar");
 	assert_eq!(updated.tags, vec!["renamed"]);
 
-	let removed = wow_sharedmedia::remove_media(&addon_dir, &id).unwrap();
+	let removed = wow_sharedmedia::remove_media(&addon_dir, &id, max_backups()).unwrap();
 	assert_eq!(removed.entry.key, "Renamed Bar");
 	assert!(!addon_dir.join(&removed.deleted_file).exists());
 
@@ -79,7 +86,7 @@ fn e2e_duplicate_rejection() {
 	let tmp = tempfile::TempDir::new().unwrap();
 	let addon_dir = tmp.path().join("DupeAddon");
 
-	wow_sharedmedia::ensure_addon_dir(&addon_dir).unwrap();
+	wow_sharedmedia::ensure_addon_dir(&addon_dir, max_backups()).unwrap();
 
 	let source = tmp.path().join("same.png");
 	create_test_png(&source);
@@ -87,12 +94,14 @@ fn e2e_duplicate_rejection() {
 	wow_sharedmedia::import_media(
 		&addon_dir,
 		wow_sharedmedia::ImportOptions::new(wow_sharedmedia::MediaType::Statusbar, "Same", &source),
+		max_backups(),
 	)
 	.unwrap();
 
 	let result = wow_sharedmedia::import_media(
 		&addon_dir,
 		wow_sharedmedia::ImportOptions::new(wow_sharedmedia::MediaType::Statusbar, "Same", &source),
+		max_backups(),
 	);
 	assert!(result.is_err());
 }
@@ -110,6 +119,14 @@ fn e2e_config_default_and_resolve() {
 	assert!(cfg.addon.wow_path.is_none());
 	assert!(cfg.addon.dir.is_none());
 	assert!(cfg.resolve_addon_dir().is_none());
+	assert_eq!(
+		wind_media_cli::config::resolve_max_backups(Some(&cfg)),
+		wind_media_cli::config::DEFAULT_MAX_BACKUPS
+	);
+	assert_eq!(
+		wind_media_cli::config::resolve_max_backups(None),
+		wind_media_cli::config::DEFAULT_MAX_BACKUPS
+	);
 
 	let mut cfg2 = wind_media_cli::config::Config::default_config();
 	cfg2.addon.wow_path = Some(std::path::PathBuf::from("/wow"));

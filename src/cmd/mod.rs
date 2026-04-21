@@ -44,7 +44,7 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 	match cli.command {
 		Command::Init => {
 			let dir = resolve_addon_dir(&cli, config.as_ref())?;
-			init::run(&dir)?;
+			init::run(&dir, config.as_ref())?;
 		}
 		Command::Import {
 			media_type,
@@ -72,7 +72,7 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 		}
 		Command::Remove { id } => {
 			let dir = resolve_addon_dir(&cli, config.as_ref())?;
-			remove::run(&dir, &id)?;
+			remove::run(&dir, &id, config.as_ref())?;
 		}
 		Command::Update {
 			id,
@@ -87,6 +87,7 @@ pub fn dispatch(cli: Cli) -> Result<(), WindMediaError> {
 				key.as_deref(),
 				tags.as_deref(),
 				locales.as_deref(),
+				config.as_ref(),
 			)?;
 		}
 		Command::Info => {

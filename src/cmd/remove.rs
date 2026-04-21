@@ -1,10 +1,17 @@
 use std::path::Path;
 
+use crate::config;
 use crate::error::WindMediaError;
 use crate::output;
 
-pub fn run(addon_dir: &Path, id: &uuid::Uuid) -> Result<(), WindMediaError> {
-	let removed = wow_sharedmedia::remove_media(addon_dir, id).map_err(WindMediaError::library)?;
+pub fn run(
+	addon_dir: &Path,
+	id: &uuid::Uuid,
+	config: Option<&config::Config>,
+) -> Result<(), WindMediaError> {
+	let max_backups = config::resolve_max_backups(config);
+	let removed = wow_sharedmedia::remove_media(addon_dir, id, max_backups)
+		.map_err(WindMediaError::library)?;
 
 	output::print_success(&format!(
 		"Removed \"{}\" ({})",
