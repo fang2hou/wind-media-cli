@@ -1,0 +1,24 @@
+[package]
+name = "wind-media-cli"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.94.0"
+license = "MIT"
+description = "CLI tool for managing the Wind Media WoW SharedMedia addon"
+
+[dependencies]
+wow-sharedmedia = "0.1"
+clap = { version = "4", features = ["derive", "env", "unicode"] }
+clap_complete = "4"
+owo-colors = { version = "4", features = ["supports-colors"] }
+comfy-table = "7"
+indicatif = "0.17"
+directories = "5"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+thiserror = "2"
+uuid = { version = "1", features = ["v4"] }
+
+[dev-dependencies]
+tempfile = "3"
+image = "0.25"
