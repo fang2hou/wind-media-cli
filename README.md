@@ -54,7 +54,7 @@ wind-media completion fish > ~/.config/fish/completions/wind-media.fish
 | -------- | -------------------------------------------------- |
 | Linux    | `~/.config/wind-media/config.toml`                |
 | macOS    | `~/.config/wind-media/config.toml`                |
-| Windows  | `%APPDATA%\wind-media\config\config.toml`         |
+| Windows  | `C:\Users\<Username>\.config\wind-media\config.toml` |
 
 Create a default config:
 
