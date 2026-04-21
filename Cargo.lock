@@ -2416,9 +2416,9 @@ dependencies = [
 
 [[package]]
 name = "wow-sharedmedia"
-version = "0.1.1"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b15f2e04bdb25e8c62196ab41fc2ec8edd4eb76737e491b234901167e203188"
+checksum = "de30480041c5463c5d7148d9c69be967c79706fa9dd41bda7478b4c90c9ef5ff"
 dependencies = [
  "base64",
  "chrono",
