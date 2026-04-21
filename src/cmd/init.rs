@@ -13,10 +13,7 @@ pub fn run(addon_dir: &Path, config: Option<&Config>) -> Result<(), WindMediaErr
 	let title = wow_sharedmedia::addon_title(name);
 
 	if is_new {
-		output::print_success(&format!(
-			"Created addon directory: {}",
-			addon_dir.display()
-		));
+		output::print_success(&format!("Created addon directory: {}", addon_dir.display()));
 	} else {
 		output::print_success(&format!(
 			"Refreshed addon directory: {}",

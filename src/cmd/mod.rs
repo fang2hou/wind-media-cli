@@ -29,7 +29,10 @@ fn resolve_addon_dir(cli: &Cli, config: Option<&Config>) -> Result<PathBuf, Wind
 	Ok(dir)
 }
 
-fn resolve_existing_addon_dir(cli: &Cli, config: Option<&Config>) -> Result<PathBuf, WindMediaError> {
+fn resolve_existing_addon_dir(
+	cli: &Cli,
+	config: Option<&Config>,
+) -> Result<PathBuf, WindMediaError> {
 	let dir = resolve_addon_dir(cli, config)?;
 	if !dir.join("data.lua").exists() {
 		return Err(WindMediaError::InvalidInput(format!(
