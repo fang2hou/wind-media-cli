@@ -52,12 +52,16 @@ pub fn config_dir() -> Option<PathBuf> {
 				return Some(p.join("wind-media"));
 			}
 		}
-		std::env::var("HOME").ok().map(|h| PathBuf::from(h).join(".config").join("wind-media"))
+		std::env::var("HOME")
+			.ok()
+			.map(|h| PathBuf::from(h).join(".config").join("wind-media"))
 	}
 
 	#[cfg(windows)]
 	{
-		std::env::var("APPDATA").ok().map(|a| PathBuf::from(a).join("wind-media").join("config"))
+		std::env::var("APPDATA")
+			.ok()
+			.map(|a| PathBuf::from(a).join("wind-media").join("config"))
 	}
 }
 
