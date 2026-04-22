@@ -2,6 +2,16 @@
 #### 🐛 Bug Fixes
 - (**ci**) use CHANGELOG.md as source of truth for release notes (#12) - (68b0c2e) - Zhou Fang
 
+## [0.2.1](https://github.com/fang2hou/wind-media-cli/compare/v0.2.0...v0.2.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* **ci:** add checkout step to publish job for gh CLI ([#18](https://github.com/fang2hou/wind-media-cli/issues/18)) ([f887f97](https://github.com/fang2hou/wind-media-cli/commit/f887f97c16f8a907a08d79f5e317ad8ebc544163))
+* **ci:** fix malformed JSON in release-please-config.json ([#24](https://github.com/fang2hou/wind-media-cli/issues/24)) ([38e6d1f](https://github.com/fang2hou/wind-media-cli/commit/38e6d1fc610c216b3c7746998d6cd400a2903161))
+* **ci:** move changelog-sections to per-package config level ([#26](https://github.com/fang2hou/wind-media-cli/issues/26)) ([c984b14](https://github.com/fang2hou/wind-media-cli/commit/c984b14ff2eb133f7e1c66588d01c38094673542))
+* **ci:** use GitHub App token for release-please ([#22](https://github.com/fang2hou/wind-media-cli/issues/22)) ([3005640](https://github.com/fang2hou/wind-media-cli/commit/30056403a9ea583bd8ecd49b75d056e6f3f8204e))
+
 ## [0.2.0](https://github.com/fang2hou/wind-media-cli/compare/0.1.0...v0.2.0) (2026-04-22)
 
 
