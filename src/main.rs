@@ -24,3 +24,5 @@ fn main() {
 		std::process::exit(1);
 	}
 }
+
+// Release-please accumulation test marker
