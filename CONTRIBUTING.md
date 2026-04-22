@@ -45,7 +45,7 @@ cargo install --locked cocogitto
 prek install --hook-type pre-commit --hook-type commit-msg --hook-type pre-push
 ```
 
-Hook and commit configuration lives in `prek.toml` and `cog.toml`.
+Hook and commit configuration lives in `prek.toml` and `cog.toml`. Cocogitto is only used for local commit validation (`cog verify`). Release automation is handled by [release-lease](https://github.com/googleapis/release-lease).
 
 ## 💬 Commit Convention
 
@@ -59,7 +59,15 @@ Examples:
 - `test: add config-init E2E coverage`
 - `ci: pin Rust toolchain to 1.95`
 
-Cocogitto uses these prefixes to determine version bumps and generate changelogs. See `cog.toml` for the full type configuration.
+These prefixes determine how [release-lease](https://github.com/googleapis/release-lease) bumps versions:
+
+| Prefix | Version bump |
+|--------|-------------|
+| `feat:` | minor |
+| `fix:` | patch |
+| `feat!:` or `BREAKING CHANGE` footer | major |
+
+See `release-lease-config.json` for changelog section configuration.
 
 ## 📬 Pull Requests
 

@@ -12,7 +12,7 @@ It initializes addon directories, imports media files, manages registry entries,
 
 ### Pre-built binaries
 
-Download from [GitHub Releases](https://github.com/fang2hou/wind-media-cli/releases/latest). Pre-built binaries are available for macOS (Apple Silicon), Linux (x86_64, ARM64), and Windows (x86_64, ARM64).
+Download from [GitHub Releases](https://github.com/fang2hou/wind-media-cli/releases/latest). Pre-built binaries are available for macOS (Apple Silicon), Linux (x86_64, ARM64), and Windows (x86_64).
 
 ### mise
 
@@ -69,7 +69,7 @@ wind-media completion nushell > ~/.cache/nushell/vendor_completions.nu
 | macOS    | `~/.config/wind-media/config.toml`      |
 | Windows  | `%USERPROFILE%\.config\wind-media\config.toml` |
 
-> **Note:** On Linux and macOS, `XDG_CONFIG_HOME` is checked first. On Windows, the path is always `%USERPROFILE%\.config\wind-media\`.
+> **Note:** On Linux and macOS, `XDG_CONFIG_HOME` is checked first. On Windows, only `%USERPROFILE%` is used.
 
 Create a default config:
 
