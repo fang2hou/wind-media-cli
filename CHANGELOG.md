@@ -2,6 +2,13 @@
 #### 🐛 Bug Fixes
 - (**ci**) use CHANGELOG.md as source of truth for release notes (#12) - (68b0c2e) - Zhou Fang
 
+## [0.2.1](https://github.com/fang2hou/wind-media-cli/compare/v0.2.0...v0.2.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* **ci:** add checkout step to publish job for gh CLI ([#18](https://github.com/fang2hou/wind-media-cli/issues/18)) ([f887f97](https://github.com/fang2hou/wind-media-cli/commit/f887f97c16f8a907a08d79f5e317ad8ebc544163))
+
 ## [0.2.0](https://github.com/fang2hou/wind-media-cli/compare/0.1.0...v0.2.0) (2026-04-22)
 
 
