@@ -157,6 +157,11 @@ jobs:
             cog changelog "${changelog_args[@]}" > /tmp/new_changelog.md
           fi
 
+          # Normalize header: cog may output "## Unreleased" on release branches
+          # where the tag isn't yet on main. Replace with versioned header.
+          today="$(date +%Y-%m-%d)"
+          sed -i "1s/^## Unreleased.*/## $version - $today/" /tmp/new_changelog.md
+
           # Prepend new section to existing CHANGELOG (preserve history)
           if [ -f CHANGELOG.md ]; then
             echo "" >> /tmp/new_changelog.md
