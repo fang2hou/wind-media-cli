@@ -18,4 +18,5 @@ chore = { changelog_title = "🔧 Chores", omit_from_changelog = true }
 build = { changelog_title = "📦 Build" }
 perf = { changelog_title = "⚡ Performance" }
 style = { changelog_title = "💄 Style", omit_from_changelog = true }
+merge = { changelog_title = "🔀 Merge", omit_from_changelog = true }
 revert = { changelog_title = "⏪ Reverts" }
