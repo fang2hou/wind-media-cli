@@ -1,0 +1,52 @@
+min_version = "2025.1.0"
+
+[tools]
+"rust" = { version = "1.95.0", profile = "default", components = "clippy,rust-analyzer,rust-src,rustfmt" }
+
+[env]
+CARGO_TERM_COLOR = "always"
+
+[tasks.fmt]
+description = "Check all formatting"
+depends = ["rust:fmt"]
+
+[tasks."fmt:fix"]
+description = "Fix all formatting"
+depends = ["rust:fmt:fix"]
+
+[tasks.lint]
+description = "Lint all code"
+depends = ["rust:lint"]
+
+[tasks."rust:fmt"]
+description = "Check Rust formatting"
+run = "cargo fmt --all --check"
+
+[tasks."rust:fmt:fix"]
+description = "Fix Rust formatting"
+run = "cargo fmt --all"
+
+[tasks."rust:lint"]
+description = "Lint Rust with clippy"
+run = "cargo clippy -p wind-media-cli --all-targets -- -D warnings"
+
+[tasks.build]
+description = "Build the project"
+run = "cargo build -p wind-media-cli"
+
+[tasks.test]
+description = "Run tests"
+run = "cargo test -p wind-media-cli"
+
+[tasks.docs]
+description = "Build docs"
+env = { RUSTDOCFLAGS = "-D warnings" }
+run = "cargo doc -p wind-media-cli --no-deps"
+
+[tasks.msrv]
+description = "Check MSRV"
+run = "cargo check -p wind-media-cli"
+
+[tasks.ci]
+description = "Full CI pipeline"
+depends = ["fmt", "lint", "test"]

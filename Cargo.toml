@@ -4,7 +4,18 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.95.0"
 license = "MIT"
-description = "Wind Media addon CLI"
+description = "CLI tool for managing World of Warcraft SharedMedia addons"
+readme = "README.md"
+repository = "https://github.com/fang2hou/wind-media-cli"
+homepage = "https://github.com/fang2hou/wind-media-cli"
+keywords = ["wow", "sharedmedia", "addon", "cli", "media"]
+categories = ["command-line-utilities", "game-development"]
+include = [
+	"src/**/*",
+	"README.md",
+	"LICENSE",
+	"Cargo.toml",
+]
 
 [dependencies]
 wow-sharedmedia = "0.2"

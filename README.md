@@ -10,8 +10,22 @@ It initializes addon directories, imports media files, manages registry entries,
 
 ## 📦 Installation
 
+### Pre-built binaries (recommended)
+
+Download the latest release for your platform from [GitHub Releases](https://github.com/fang2hou/wind-media-cli/releases/latest).
+
+| Platform | Arch | File |
+| -------- | ---- | ---- |
+| macOS | Apple Silicon (M1+) | `wind-media-cli-*-aarch64-apple-darwin.tar.gz` |
+| Linux | x86_64 | `wind-media-cli-*-x86_64-unknown-linux-gnu.tar.gz` |
+| Linux | ARM64 | `wind-media-cli-*-aarch64-unknown-linux-gnu.tar.gz` |
+| Windows | x86_64 | `wind-media-cli-*-x86_64-pc-windows-msvc.zip` |
+| Windows | ARM64 | `wind-media-cli-*-aarch64-pc-windows-msvc.zip` |
+
+### Build from source
+
 ```bash
-cargo install wind-media-cli
+cargo install --git https://github.com/fang2hou/wind-media-cli
 ```
 
 Requires Rust 1.95+ (edition 2024).
