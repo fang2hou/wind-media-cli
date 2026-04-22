@@ -10,17 +10,15 @@ It initializes addon directories, imports media files, manages registry entries,
 
 ## 📦 Installation
 
-### Pre-built binaries (recommended)
+### Pre-built binaries
 
-Download the latest release for your platform from [GitHub Releases](https://github.com/fang2hou/wind-media-cli/releases/latest).
+Download from [GitHub Releases](https://github.com/fang2hou/wind-media-cli/releases/latest). Pre-built binaries are available for macOS (Apple Silicon), Linux (x86_64, ARM64), and Windows (x86_64, ARM64).
 
-| Platform | Arch | File |
-| -------- | ---- | ---- |
-| macOS | Apple Silicon (M1+) | `wind-media-cli-*-aarch64-apple-darwin.tar.gz` |
-| Linux | x86_64 | `wind-media-cli-*-x86_64-unknown-linux-gnu.tar.gz` |
-| Linux | ARM64 | `wind-media-cli-*-aarch64-unknown-linux-gnu.tar.gz` |
-| Windows | x86_64 | `wind-media-cli-*-x86_64-pc-windows-msvc.zip` |
-| Windows | ARM64 | `wind-media-cli-*-aarch64-pc-windows-msvc.zip` |
+### mise
+
+```bash
+mise use -g github:fang2hou/wind-media-cli@latest
+```
 
 ### Build from source
 
@@ -58,19 +56,20 @@ wind-media info
 wind-media completion bash > ~/.local/share/bash-completion/completions/wind-media
 wind-media completion zsh > ~/.zfunc/_wind-media
 wind-media completion fish > ~/.config/fish/completions/wind-media.fish
+wind-media completion nushell > ~/.cache/nushell/vendor_completions.nu
 ```
 
 ## ⚙️ Configuration
 
-`wind-media` reads configuration from the XDG config directory:
+`wind-media` reads configuration from:
 
-| Platform | Config path                                        |
-| -------- | -------------------------------------------------- |
-| Linux    | `~/.config/wind-media/config.toml`                |
-| macOS    | `~/.config/wind-media/config.toml`                |
-| Windows  | `%XDG_CONFIG_HOME%\wind-media\config.toml` (defaults to `%USERPROFILE%\.config\wind-media\config.toml`) |
+| Platform | Config path                             |
+| -------- | --------------------------------------- |
+| Linux    | `~/.config/wind-media/config.toml`      |
+| macOS    | `~/.config/wind-media/config.toml`      |
+| Windows  | `%USERPROFILE%\.config\wind-media\config.toml` |
 
-> **Note:** `XDG_CONFIG_HOME` is checked first on all platforms. If unset, the default varies by OS.
+> **Note:** On Linux and macOS, `XDG_CONFIG_HOME` is checked first. On Windows, the path is always `%USERPROFILE%\.config\wind-media\`.
 
 Create a default config:
 

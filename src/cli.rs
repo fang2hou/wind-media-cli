@@ -1,12 +1,12 @@
 use std::path::PathBuf;
 
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Parser, Subcommand, ValueEnum, ValueHint};
 
 #[derive(Parser)]
 #[command(name = "wind-media", about = "Wind Media addon CLI")]
 pub struct Cli {
 	/// Override addon directory path
-	#[arg(long, global = true)]
+	#[arg(long, global = true, value_hint = ValueHint::DirPath)]
 	pub addon_dir: Option<PathBuf>,
 
 	/// Disable colored output
@@ -28,6 +28,7 @@ pub enum Command {
 		/// Display key for the entry
 		key: String,
 		/// Path to the source file
+		#[arg(value_hint = ValueHint::FilePath)]
 		source: PathBuf,
 		/// Comma-separated locale names (fonts only)
 		#[arg(long)]
@@ -71,7 +72,7 @@ pub enum Command {
 	/// Generate shell completions
 	Completion {
 		/// Shell to generate completions for
-		shell: clap_complete::Shell,
+		shell: ShellName,
 	},
 }
 
@@ -104,6 +105,42 @@ impl std::fmt::Display for CliMediaType {
 			Self::Border => write!(f, "border"),
 			Self::Font => write!(f, "font"),
 			Self::Sound => write!(f, "sound"),
+		}
+	}
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
+pub enum ShellName {
+	Bash,
+	Elvish,
+	Fish,
+	Nushell,
+	PowerShell,
+	Zsh,
+}
+
+impl clap_complete::Generator for ShellName {
+	fn file_name(&self, name: &str) -> String {
+		use clap_complete::aot::Shell;
+		match self {
+			Self::Bash => Shell::Bash.file_name(name),
+			Self::Elvish => Shell::Elvish.file_name(name),
+			Self::Fish => Shell::Fish.file_name(name),
+			Self::PowerShell => Shell::PowerShell.file_name(name),
+			Self::Zsh => Shell::Zsh.file_name(name),
+			Self::Nushell => clap_complete_nushell::Nushell.file_name(name),
+		}
+	}
+
+	fn generate(&self, cmd: &clap::Command, buf: &mut dyn std::io::Write) {
+		use clap_complete::aot::Shell;
+		match self {
+			Self::Bash => Shell::Bash.generate(cmd, buf),
+			Self::Elvish => Shell::Elvish.generate(cmd, buf),
+			Self::Fish => Shell::Fish.generate(cmd, buf),
+			Self::PowerShell => Shell::PowerShell.generate(cmd, buf),
+			Self::Zsh => Shell::Zsh.generate(cmd, buf),
+			Self::Nushell => clap_complete_nushell::Nushell.generate(cmd, buf),
 		}
 	}
 }

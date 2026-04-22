@@ -59,12 +59,6 @@ pub fn config_dir() -> Option<PathBuf> {
 
 	#[cfg(windows)]
 	{
-		if let Ok(xdg) = std::env::var("XDG_CONFIG_HOME") {
-			let p = PathBuf::from(xdg);
-			if p.is_absolute() {
-				return Some(p.join("wind-media"));
-			}
-		}
 		std::env::var("USERPROFILE")
 			.ok()
 			.map(|h| PathBuf::from(h).join(".config").join("wind-media"))
