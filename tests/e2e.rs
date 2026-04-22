@@ -133,7 +133,10 @@ fn e2e_config_default_and_resolve() {
 	let resolved = cfg2.resolve_addon_dir().unwrap();
 	assert_eq!(
 		resolved,
-		std::path::PathBuf::from("/wow/Interface/AddOns/!!!WindMedia")
+		std::path::PathBuf::from("/wow")
+			.join("Interface")
+			.join("AddOns")
+			.join("!!!WindMedia")
 	);
 
 	let mut cfg3 = wind_media_cli::config::Config::default_config();

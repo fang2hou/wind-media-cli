@@ -143,7 +143,12 @@ impl Config {
 		}
 
 		if let Some(ref wow_path) = self.addon.wow_path {
-			return Some(wow_path.join("Interface/AddOns").join(&self.addon.name));
+			return Some(
+				wow_path
+					.join("Interface")
+					.join("AddOns")
+					.join(&self.addon.name),
+			);
 		}
 
 		None
