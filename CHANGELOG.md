@@ -1,3 +1,7 @@
+## 0.1.1 - 2026-04-23
+#### 🐛 Bug Fixes
+- (**ci**) use CHANGELOG.md as source of truth for release notes (#12) - (68b0c2e) - Zhou Fang
+
 ## 0.1.0 - 2026-04-22
 #### ✨ Features
 - add nushell completions, mise install support, and improve Windows config - (c511f95) - Zhou Fang
