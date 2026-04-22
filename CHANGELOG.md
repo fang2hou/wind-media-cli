@@ -2,6 +2,20 @@
 #### 🐛 Bug Fixes
 - (**ci**) use CHANGELOG.md as source of truth for release notes (#12) - (68b0c2e) - Zhou Fang
 
+## [0.2.0](https://github.com/fang2hou/wind-media-cli/compare/0.1.0...v0.2.0) (2026-04-22)
+
+
+### Features
+
+* **ci:** replace cocogitto release with release-please ([#14](https://github.com/fang2hou/wind-media-cli/issues/14)) ([814c102](https://github.com/fang2hou/wind-media-cli/commit/814c1022566c98c120fafc9c354ed34976b419d7))
+
+
+### Bug Fixes
+
+* add release-please accumulation test marker ([#17](https://github.com/fang2hou/wind-media-cli/issues/17)) ([b896195](https://github.com/fang2hou/wind-media-cli/commit/b896195008013b82938445b02d1cfb51bb668e7f))
+* **ci:** add pull-requests write permission for release-please ([#15](https://github.com/fang2hou/wind-media-cli/issues/15)) ([073491c](https://github.com/fang2hou/wind-media-cli/commit/073491c3d290628fdfcc49d7ec9c5eff2d887f84))
+* **ci:** use CHANGELOG.md as source of truth for release notes ([#12](https://github.com/fang2hou/wind-media-cli/issues/12)) ([68b0c2e](https://github.com/fang2hou/wind-media-cli/commit/68b0c2e13d70b29c26795ac8d84b431669ee51a8))
+
 ## 0.1.0 - 2026-04-22
 #### ✨ Features
 - add nushell completions, mise install support, and improve Windows config - (c511f95) - Zhou Fang
